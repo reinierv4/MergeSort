@@ -1,17 +1,19 @@
 class Sorter < Struct.new(:list)
 
   def simple(index = 0)
-    first = @list[index]
-    second = @list[index + 1]
-    first_index = @list.index(first)
-    second_index = @list.index(second)
+    shorter_list = list[index..list.size]
+    min = shorter_list.min
 
-    if first > second
-      @list[second_index] = first
-      @list[first_index] = second
-      sort(@list, index + 1)
-    else
+    list.delete(min)
+    list.insert(index, min)
 
-    end
+    shorter_list.size == 1 ? list : simple(index + 1)
+  end
+
+  def shift_sort(arr = [])
+    min = list.min
+    list.delete(min)
+    return arr << min if list.empty?
+    [min] + shift_sort(list)
   end
 end

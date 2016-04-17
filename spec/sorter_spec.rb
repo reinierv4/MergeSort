@@ -13,6 +13,10 @@ RSpec.describe Sorter do
     it "returns a sorted list" do
       expect(subject.simple).to eq(sorted)
     end
+
+    it "returns a sorted list" do
+      expect(subject.shift_sort).to eq(sorted)
+    end
   end
 
   describe "sorts lists" do
