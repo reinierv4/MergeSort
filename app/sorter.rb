@@ -16,4 +16,13 @@ class Sorter < Struct.new(:list)
     return arr << min if list.empty?
     [min] + shift_sort(list)
   end
+
+  def bubble_sort(arr = [])
+    list.each_with_index do |x, i|
+      list[i], list[i + 1] = list[i + 1], list[i] if i < list.size - 1 && list[i] > list[i + 1]
+    end
+    last = list.delete(list.last)
+    return arr + [last] if list.empty?
+    bubble_sort(list) + [last]
+  end
 end

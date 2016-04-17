@@ -24,7 +24,7 @@ RSpec.describe Sorter do
       expect(subject.merge_sort).to eq(sorted)
     end
 
-    pending "using bubble sort" do
+    it "using bubble sort" do
       expect(subject.bubble_sort).to eq(sorted)
     end
   end
