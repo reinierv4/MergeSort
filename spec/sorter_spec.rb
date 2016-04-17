@@ -20,7 +20,7 @@ RSpec.describe Sorter do
   end
 
   describe "sorts lists" do
-    pending "using merge sort" do
+    it "using merge sort" do
       expect(subject.merge_sort).to eq(sorted)
     end
 

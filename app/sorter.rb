@@ -22,7 +22,10 @@ class Sorter < Struct.new(:list)
       list[i], list[i + 1] = list[i + 1], list[i] if i < list.size - 1 && list[i] > list[i + 1]
     end
     last = list.delete(list.last)
-    return arr + [last] if list.empty?
+    return [last] if list.empty?
     bubble_sort(list) + [last]
+  end
+
+  def merge_sort
   end
 end
