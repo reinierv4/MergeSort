@@ -24,6 +24,14 @@ RSpec.describe Sorter do
       expect(subject.merge_sort).to eq(sorted)
     end
 
+    it "using merge sort" do
+      expect(Sorter.new(unsorted).merge_sort).to eq(sorted)
+    end
+
+    it 'wefjewfjefw' do
+      expect(Sorter.new([2,1]).merge_sort()).to eq([1,2])
+    end
+
     it "using bubble sort" do
       expect(subject.bubble_sort).to eq(sorted)
     end
