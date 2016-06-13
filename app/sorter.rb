@@ -26,101 +26,41 @@ class Sorter < Struct.new(:list)
     return [last] if list.empty?
     bubble_sort(list) + [last]
   end
-
+  
   def merge_sort(arr = [], elements = 1) 
-      
-      #Prepare the array for sorting in the first iteration
-      if elements == 1 
-        arr = list
-        arr = arr.each_slice(1).to_a
-      end
-
-
-      #Save the results of the iteration in this array
-      return_array = []
-      
-      #define the helper_method
-      
-      
-      finished = false
-      #iterate of the general array, beginning of the actual algorithm
-      arr.each_with_index do |sub_array, index|
-        
-        if index%2 == 0 || index == arr.length-1 && !finished #Skip an element
-          
-          #escape the loop if iteration should have finished, otherwise the last one will be executed twice
+    #Prepare the array for sorting in the first iteration
+    arr = list.each_slice(1).to_a if elements == 1 
+    return_array = []
+    finished = false
+    arr.each_with_index do |sub_array, index|
+      if index%2 == 0 || index == arr.length-1 && !finished 
+        if index == arr.length-1 
           temp_array = []
-          
-          if index == arr.length-1 
-
-            
-            while sub_array.length > 0
-              temp_array.push(sub_array.min)
-              sub_array.delete_at(sub_array.index(sub_array.min))
-              
-            end
-           
-            if temp_array.length>0
-              return_array.push(temp_array)
-            end
-            
-            finished = true
-          else
-            #Create an array element to check with 
-            compare_array = arr[index+1]
-            storage_sort = []
-
-            iteration = 0
-
-            return_array.push(sort_two_elements(compare_array, sub_array, storage_sort, iteration))
+          while sub_array.length > 0
+            temp_array << sub_array.min
+            sub_array.delete_at(sub_array.index(sub_array.min))
           end
-        end #End of first if statement
-        
-        if index == arr.length-2 
-            finished =true
+          return_array << temp_array if temp_array.length>0
+          finished = true
+        else
+          compare_array = arr[index+1]
+          storage_sort = []
+          until compare_array.length == 0 && sub_array.length == 0 do
+            compare_array[0] < sub_array[0] ? (storage_sort << compare_array.shift) : (storage_sort << sub_array.shift)
+            if compare_array.length == 0 
+              storage_sort << sub_array.shift while sub_array.length > 0
+            elsif sub_array.length == 0 
+              storage_sort << compare_array.shift while compare_array.length > 0
+            end
+          end
+          return_array << storage_sort
         end
-
-      
-      end #End of the iteration over the whole array
-
-      #Stopping condition
-      if return_array.length == 1
-        return return_array[0]
-      else
-        merge_sort(return_array, elements = 2)
-      end
-  end
-
-  def sort_two_elements(array1, array2, storage_sort, iteration)
-
-            
-            if array1[0]<array2[0]
-              storage_sort.push(array1.shift)
-            else
-              storage_sort.push(array2.shift)
-            end
-            #check if one of the arrays is empty
-            if array1.length == 0 
-              array2.each do |item|
-                storage_sort.push(item)
-              end
-              array2 = []
-            elsif array2.length == 0 
-              array1.each do |item|
-                storage_sort.push(item)
-              end
-              array1 = []
-            end
-            
-            if array1.length == 0 && array2.length == 0
-
-              return storage_sort 
-            else
-              sort_two_elements(array1, array2, storage_sort, iteration + 1)
-            end
-
-           
-      end
+      end 
+        finished = true if index == arr.length-2 
+    end
+      return_array.length == 1 ? (return return_array[0]) : (merge_sort(return_array, elements = 2))
+  end 
+  
 end
 
 
